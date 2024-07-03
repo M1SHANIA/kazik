@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wheel of Fortune</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>TRY YOUR LUCK!</h1>
+      <p>Click the «Spin» button to win free spins and real money!</p>
+      <div class="wheel-of-fortune"></div>
+      <div style="margin-top: 30px; position: relative; z-index: 1">
+        <button type="button" id="spin-button">Spin</button>
+      </div>
+    </div>
+    <script type="module">
+      import WheelOfFortune from "./script.js";
+
+      const labels = [
+        "500 ZWM",
+        "Spin Again",
+        "50 ZWM",
+        "3000 ZWM",
+        "100 ZWM",
+        "Spin Again",
+        "1000 ZWM",
+        "5000 ZWM",
+      ];
+
+      const wheelOfFortune = new WheelOfFortune(
+        document.querySelector(".wheel-of-fortune"),
+        labels
+      );
+
+      const spinButton = document.getElementById("spin-button");
+      let spinCount = 0;
+
+      spinButton.addEventListener("click", () => {
+        if (spinCount === 0) {
+          wheelOfFortune.spin(labels.indexOf("Spin Again"));
+        } else if (spinCount === 1) {
+          wheelOfFortune.spin(labels.indexOf("500 ZWM"));
+        } else {
+          const randomIndex = Math.floor(Math.random() * labels.length);
+          wheelOfFortune.spin(randomIndex);
+        }
+        spinCount++;
+      });
+    </script>
+  </body>
+</html>
