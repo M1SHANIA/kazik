@@ -52,15 +52,15 @@ body {
 
 .wheel-of-fortune__arrow {
   position: absolute;
-  top: 50%;
-  left: 100%;
+  top: -10px; /* Adjusted to place the arrow at the top */
+  left: 50%;
   z-index: 2;
-  margin: -12px 0 0 -13px;
+  margin-left: -13px;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 12.5px 30px 12.5px 0;
-  border-color: transparent #ae67cb transparent transparent;
+  border-width: 0 12.5px 25px 12.5px; /* Adjusted to make the arrow point downwards */
+  border-color: transparent transparent #ae67cb transparent;
 }
 
 .wheel-of-fortune__label {
