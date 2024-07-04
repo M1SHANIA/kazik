@@ -6,18 +6,27 @@ body {
   height: 100vh;
   background-image: url("img/bonanza-bg.jpg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   background-position: center;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   margin: 0;
 }
 
 .container {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 img {
-  height: 100pt;
-  margin-top: -100pt;
+  height: 110pt;
+  margin-top: -100pt; 
 }
 
 h1 {
@@ -41,10 +50,10 @@ p {
 
 .wheel-of-fortune {
   position: relative;
+  margin: 0 auto;
   width: 300px;
   height: 300px;
   font: 12px/1 "Roboto", sans-serif;
-  margin: 0 auto;
 }
 
 .wheel-of-fortune__container {
@@ -79,7 +88,7 @@ p {
 
 .wheel-of-fortune__arrow {
   position: absolute;
-  top: -10px; /* Adjusted to place the arrow at the top */
+  top: 0px; /* Adjusted to place the arrow at the top */
   left: 50%;
   z-index: 2;
   margin-left: -13px;
@@ -88,6 +97,7 @@ p {
   border-style: solid;
   border-width: 0 12.5px 25px 12.5px; /* Adjusted to make the arrow point downwards */
   border-color: transparent transparent #ae67cb transparent;
+  transform: rotate(180deg);
 }
 
 .wheel-of-fortune__label {
