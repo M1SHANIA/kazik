@@ -52,10 +52,10 @@ body {
 
 .wheel-of-fortune__arrow {
   position: absolute;
-  top: -10px; /* Adjusted to place the arrow at the top */
+  top: -25px; /* Adjusted to place the arrow at the top */
   left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
-  margin-left: -13px;
   width: 0;
   height: 0;
   border-style: solid;
