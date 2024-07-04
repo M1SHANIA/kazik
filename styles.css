@@ -4,12 +4,38 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #e0f7fa;
+  background-image: url("img/bonanza-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
   margin: 0;
 }
 
 .container {
   text-align: center;
+}
+
+img {
+  height: 100pt;
+  margin-top: -100pt;
+}
+
+h1 {
+  color: #f5e143;
+  font-size: 42px;
+  font-weight: 800;
+  -webkit-text-stroke: 2px #dd0869;
+  text-shadow: #dd0869 3px 3px 3px;
+}
+
+p {
+  color: #81abfa;
+  font-size: 24px;
+  font-weight: 600;
+  text-shadow: #dd0869 3px 3px 3px;
+  padding: 20px;
+  background-color: #f5e143;
+  border-radius: 40px;
+  border: #dd0869 2px solid;
 }
 
 .wheel-of-fortune {
@@ -52,10 +78,10 @@ body {
 
 .wheel-of-fortune__arrow {
   position: absolute;
-  top: -25px; /* Adjusted to place the arrow at the top */
+  top: -10px; /* Adjusted to place the arrow at the top */
   left: 50%;
-  transform: translateX(-50%);
   z-index: 2;
+  margin-left: -13px;
   width: 0;
   height: 0;
   border-style: solid;

@@ -1,16 +1,16 @@
 export default class WheelOfFortune {
     constructor(element, labels) {
-        this.animationTime = 2000; // Reduce the animation time for faster spins
+        this.animationTime = 4000; // Adjusted animation time for smoother effect
         this.element = element;
         this.labels = labels;
         this.container = this.createElement('div', 'wheel-of-fortune__container');
         this.element.appendChild(this.container);
         this.degrees = 360 / labels.length;
+        this.currentRotation = 0; // Current rotation in degrees
         this.isLocked = false;
 
         this.labels.forEach(this.createSegment);
         this.labels.forEach(this.createLabel);
-        this.element.appendChild(this.createElement('div', 'wheel-of-fortune__arrow'));
     }
 
     createSegment = (label, index) => {
@@ -33,30 +33,29 @@ export default class WheelOfFortune {
         this.container.appendChild(labelNode);
     };
 
-    spin = (index) => {
+    spin = (targetIndex) => {
         if (this.isLocked) return;
 
         this.isLocked = true;
 
-        const segmentDegrees = this.degrees * index - 90 - this.degrees / 2;
-        const randomDegrees = (this.degrees - 6) * Math.random() + 3;
-        const animationRotate = 360 * 5; // Number of spins before stopping
-        const totalRotation = -segmentDegrees - randomDegrees - animationRotate;
-
-        // Reset to initial position without transition
+        // Reset rotation to zero before each spin
         this.container.style.transition = 'none';
         this.container.style.transform = `rotate(0deg)`;
 
-        // Force reflow to apply the reset immediately
-        this.container.offsetHeight;
-
-        // Apply the rotation with transition
-        this.container.style.transition = `transform ${this.animationTime}ms cubic-bezier(0.33, 1, 0.68, 1)`;
-        this.container.style.transform = `rotate(${totalRotation}deg)`;
-
         setTimeout(() => {
-            this.isLocked = false;
-        }, this.animationTime);
+            // Calculate target rotation to reach the target segment clockwise
+            const targetRotation = 360 * 5 + (360 - (this.degrees * targetIndex));
+
+            // Apply transition to animate the spin
+            this.container.style.transition = `transform ${this.animationTime}ms cubic-bezier(0.33, 1, 0.68, 1)`;
+            this.container.style.transform = `rotate(${targetRotation}deg)`;
+
+            // Update current rotation after the animation completes
+            setTimeout(() => {
+                this.isLocked = false;
+                this.currentRotation = targetRotation % 360; // Update current rotation to the new position
+            }, this.animationTime);
+        }, 50); // Delay added to ensure transition reset takes effect
     };
 
     createElement = (type, className) => {
