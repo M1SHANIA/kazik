@@ -1,13 +1,11 @@
 export default class WheelOfFortune {
     constructor(element, labels) {
-        this.animationSpins = 5;
-        this.animationTime = 5000;
+        this.animationTime = 2000; // Reduce the animation time for faster spins
         this.element = element;
         this.labels = labels;
         this.container = this.createElement('div', 'wheel-of-fortune__container');
         this.element.appendChild(this.container);
         this.degrees = 360 / labels.length;
-        this.currentRotation = 0;
         this.isLocked = false;
 
         this.labels.forEach(this.createSegment);
@@ -42,41 +40,23 @@ export default class WheelOfFortune {
 
         const segmentDegrees = this.degrees * index - 90 - this.degrees / 2;
         const randomDegrees = (this.degrees - 6) * Math.random() + 3;
-        const animationRotate = 360 * this.animationSpins;
-        const totalRotation = this.currentRotation + (-segmentDegrees - randomDegrees - animationRotate);
+        const animationRotate = 360 * 5; // Number of spins before stopping
+        const totalRotation = -segmentDegrees - randomDegrees - animationRotate;
 
-        const targetRotation = totalRotation;
+        // Reset to initial position without transition
+        this.container.style.transition = 'none';
+        this.container.style.transform = `rotate(0deg)`;
 
-        this.animateRotation(targetRotation, () => {
-            this.currentRotation = targetRotation % 360;
+        // Force reflow to apply the reset immediately
+        this.container.offsetHeight;
+
+        // Apply the rotation with transition
+        this.container.style.transition = `transform ${this.animationTime}ms cubic-bezier(0.33, 1, 0.68, 1)`;
+        this.container.style.transform = `rotate(${totalRotation}deg)`;
+
+        setTimeout(() => {
             this.isLocked = false;
-        });
-    };
-
-    animateRotation = (targetRotation, callback) => {
-        const start = performance.now();
-        const duration = this.animationTime;
-
-        const animate = (time) => {
-            const elapsed = time - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeProgress = this.easeInOut(progress);
-
-            const rotation = this.currentRotation + (targetRotation - this.currentRotation) * easeProgress;
-            this.container.style.transform = `rotate(${rotation}deg)`;
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                callback();
-            }
-        };
-
-        requestAnimationFrame(animate);
-    };
-
-    easeInOut = (time) => {
-        return 0.5 * (1 - Math.cos(Math.PI * time));
+        }, this.animationTime);
     };
 
     createElement = (type, className) => {
