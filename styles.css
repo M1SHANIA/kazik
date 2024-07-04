@@ -7,6 +7,7 @@ body {
   background-image: url("img/bonanza-bg.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
+  background-position: center;
   margin: 0;
 }
 
@@ -28,14 +29,14 @@ h1 {
 }
 
 p {
-  color: #81abfa;
+  width: 500px;
+  color: #dd0869;
   font-size: 24px;
   font-weight: 600;
-  text-shadow: #dd0869 3px 3px 3px;
-  padding: 20px;
-  background-color: #f5e143;
-  border-radius: 40px;
-  border: #dd0869 2px solid;
+  padding: 10px;
+  background-color: #e2d995be;
+  border-radius: 30px;
+  border: #e0d477 2px solid;
 }
 
 .wheel-of-fortune {
