@@ -1,40 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   background-image: url("img/bonanza-bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.container {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  /* ставим всё по центру */
+  place-items: center;
+  /* если что-то не помещается на своё место — скрываем то, что не поместилось */
+  overflow: hidden;
 }
 
 img {
+  display: block;
   height: 110pt;
-  margin-top: -100pt; 
 }
 
 h1 {
   color: #f5e143;
-  font-size: 42px;
+  font-size: 50px;
   font-weight: 800;
   -webkit-text-stroke: 2px #dd0869;
   text-shadow: #dd0869 3px 3px 3px; 
+  margin: 20px;
 }
 
 p {
@@ -46,80 +38,186 @@ p {
   background-color: #e2d995be;
   border-radius: 30px;
   border: #e0d477 2px solid;
-}
-
-.wheel-of-fortune {
-  position: relative;
-  margin: 0 auto;
-  width: 300px;
-  height: 300px;
-  font: 12px/1 "Roboto", sans-serif;
-}
-
-.wheel-of-fortune__container {
-  position: absolute;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  border: 10px solid white;
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-  background: #e5b598;
-  transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
-}
-
-.wheel-of-fortune__segment {
-  position: absolute;
-  left: 50%;
-  top: -50%;
-  width: 100%;
-  height: 100%;
-  transform-origin: 0 100%;
-}
-
-.wheel-of-fortune__segment:nth-child(even) {
-  background: #f48fb1;
-}
-
-.wheel-of-fortune__segment:nth-child(odd) {
-  background: #81d4fa;
-}
-
-.wheel-of-fortune__arrow {
-  position: absolute;
-  top: 0px; /* Adjusted to place the arrow at the top */
-  left: 50%;
-  z-index: 2;
-  margin-left: -13px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 12.5px 25px 12.5px; /* Adjusted to make the arrow point downwards */
-  border-color: transparent transparent #ae67cb transparent;
-  transform: rotate(180deg);
-}
-
-.wheel-of-fortune__label {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: 50%;
-  transform-origin: 0 100%;
-}
-
-.wheel-of-fortune__label-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  margin-left: -5px;
-  padding-left: 25px;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
   text-align: center;
-  color: white;
-  font-weight: bold;
+  margin: 0;
+}
+
+/* общий блок для всех элементов */
+.deal-wheel {
+  /* задаём переменные блока */
+  /* размеры колеса */
+  --size: clamp(250px, 80vmin, 400px);
+  /* настройки яркости и заливки фона секторов */
+  --lg-hs: 0 3%;
+  --lg-stop: 50%;
+  --lg: linear-gradient(
+      hsl(var(--lg-hs) 0%) 0 var(--lg-stop),
+      hsl(var(--lg-hs) 20%) var(--lg-stop) 100%
+    );
+  /* добавляем позиционирование относительно других элементов */
+  position: relative;
+  /* подключаем сетку */
+  display: grid;
+  grid-gap: calc(var(--size) / 20);
+  /* выравниваем содержимое блока по центру */
+  align-items: center;
+  /* задаём имена областей внутри сетки */
+  grid-template-areas:
+    "spinner"
+    "trigger";
+  /* устанавливаем размер шрифта */
+  font-size: calc(var(--size) / 21);
+}
+
+/* всё, что относится ко внутренним элементам главного блока, будет находиться в области сетки с названием spinner */
+.deal-wheel > * {
+  grid-area: spinner;
+}
+
+/* сам блок и кнопка будут находиться в области сетки с названием trigger и будут выровнены по центру */
+.deal-wheel .btn-spin {
+  grid-area: trigger;
+  justify-self: center;
+}
+
+/* сектор колеса */
+.spinner {
+  /* добавляем относительное позиционирование */
+  position: relative;
+  /* подключаем сетку */
+  display: grid;
+  /* выравниваем всё по центру */
+  align-items: center;
+  /* добавляем элемент в сетку */
+  grid-template-areas: "spinner";
+  /* устанавливаем размеры */
+  width: var(--size);
+  height: var(--size);
+  /* поворачиваем элемент  */
+  transform: rotate(calc(var(--rotate, 25) * 1deg));
+  /* рисуем круглую обводку, а всё, что не поместится, — будет скрыто за кругом */
+  border-radius: 50%;
+}
+
+/* всё, что внутри этого блока, будет находиться в области сетки с названием spinner */
+.spinner * {
+  grid-area: spinner;
+}
+
+/* текст на секторах */
+.prize {
+  /* включаем «гибкую» вёрстку */
+  display: flex;
+  align-items: center;
+  /* задаём отступы от краёв блока */
+  padding: 0 calc(var(--size) / 7) 0 calc(var(--size) / 150);
+  /* устанавливаем размеры */
+  width: 45%;
+  height: 45%;
+  /* устанавливаем координаты, относительно которых будем вращать текст */
+  transform-origin: center right;
+  /* поворачиваем текст */
+  transform: rotate(var(--rotate));
+  /* запрещаем пользователю выделять мышкой текст на секторах */
+  user-select: none;
+  font-weight: 600;
+  color: #dedede;
+  text-shadow: #dd0868 1px 1px 1px; 
+}
+
+/* язычок */
+.ticker {
+  /* добавляем относительное позиционирование */
+  position: relative;
+  /* устанавливаем размеры */
+  left: calc(var(--size) / -15);
+  width: calc(var(--size) / 10);
+  height: calc(var(--size) / 20);
+  /* фон язычка */
+  background: var(--lg);
+  /* делаем так, чтобы язычок был выше колеса */
+  z-index: 1;
+  /* форма язычка */
+  clip-path: polygon(20% 0, 100% 50%, 20% 100%, 0% 50%);
+  /* устанавливаем точку, относительно которой будет вращаться язычок при движении колеса */
+  transform-origin: center left;
+}
+
+/* кнопка запуска колеса */
+.btn-spin {
+  font-weight: 600;
+  color: #ffffff;
+  background: #dd0868;
+  border: #a80750 2px solid;
+  width: 200px;
+  /* берём размер шрифта такой же, как в колесе */
+  font-size: inherit;
+  /* добавляем отступы от текста внутри кнопки */
+  padding: 0.9rem 2rem 1rem;
+  /* скругляем углы */
+  border-radius: 0.5rem;
+  /* меняем внешний вид курсора над кнопкой на руку*/
+  cursor: pointer;
+}
+
+/* если кнопка нажата и неактивна */
+.btn-spin:disabled {
+  /* меняем внешний вид курсора */
+  cursor: progress;
+  /* делаем кнопку полупрозрачной */
+  opacity: 0.25;
+}
+
+/* анимация вращения */
+.is-spinning .spinner {
+  transition: transform 8s cubic-bezier(0.1, -0.01, 0, 1);
+}
+
+/* анимация движения язычка */
+.is-spinning .ticker {
+          animation: tick 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* эффект, когда колесо задевает язычок при вращении */
+@keyframes tick {
+  40% {
+    /* чуть поворачиваем язычок наверх в середине анимации */
+    transform: rotate(-12deg);
+  }
+}
+
+/* анимируем выпавший сектор */
+.prize.selected .text {
+  /* делаем текст белым */
+  color: #f5e143;
+  -webkit-text-stroke: 0.5px #888040;
+  font-weight: 800;
+  /* настраиваем длительность анимации */
+  animation: selected 800ms ease;
+}
+
+/* настраиваем анимацию текста на выпавшем секторе по кадрам */
+@keyframes selected {
+  /* что происходит на 25% от начала анимации */
+  25% {
+    /* увеличиваем текст в 1,25 раза */
+    transform: scale(1.25);
+    /* добавляем тексту тень */
+    text-shadow: 1vmin 1vmin 0 hsla(0 0% 0% / 0.1);
+  }
+  40% {
+    transform: scale(0.92);
+    text-shadow: 0 0 0 hsla(0 0% 0% / 0.2);
+  }
+  60% {
+    transform: scale(1.02);
+    text-shadow: 0.5vmin 0.5vmin 0 hsla(0 0% 0% / 0.1);
+  }
+  75% {
+    transform: scale(0.98);
+  }
+  85% {
+    transform: scale(1);
+  }
 }
