@@ -44,6 +44,8 @@ p {
 
 /* общий блок для всех элементов */
 .deal-wheel {
+  background-color: #f5e143;
+  padding: 35px;
   /* задаём переменные блока */
   /* размеры колеса */
   --size: clamp(250px, 80vmin, 400px);
