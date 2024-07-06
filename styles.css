@@ -6,13 +6,15 @@ body {
   font-family: Arial, sans-serif;
   background-image: url("img/bonanza-bg.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 120%;
   background-position: center;
-  display: grid;
-  /* ставим всё по центру */
-  place-items: center;
   /* если что-то не помещается на своё место — скрываем то, что не поместилось */
-  overflow: hidden;
+}
+
+.container {
+  display: grid;
+  width: 100%;
+  place-items: center;
 }
 
 img {
@@ -247,4 +249,114 @@ p {
   85% {
     transform: scale(1);
   }
+}
+
+@media (max-width: 576px) {
+
+  body {
+    background-size: 500%;
+  }
+
+  .container {
+    place-items: center;
+  }
+
+  img {
+    margin-top: 5%;
+    height: 90pt;
+  }
+
+  h1 {
+    margin-top: 10%;
+    font-size: 45px;
+  }
+  p {
+    margin-top: 5%;
+    font-size: 26px;
+    width: 95%;
+  }
+  .deal-wheel {
+    margin-top: 10%;
+    --size: clamp(260px, 60vmin, 260px);
+    font-size: calc(var(--size) / 21);
+    padding: 25px;
+  }
+  .prize {
+    font-size: 14px;
+  }
+  .btn-spin {
+    font-size: 16px;
+    padding: 5px;
+    width: 100px;
+    height: 35px;
+    margin-top: 8px;
+  }
+  .prize {
+    padding: 0px 60px 0px 0px;
+    width: 41%;
+    height: 41%;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 992px) {
+
+  body {
+    background-size: 350%;
+  }
+
+  .container {
+    place-items: center;
+  }
+
+  img {
+    margin-top: 5%;
+    height: 120pt;
+  }
+
+  h1 {
+    margin-top: 5%;
+    font-size: 56px;
+  }
+  p {
+    margin-top: 5%;
+    font-size: 36px;
+    width: 95%;
+  }
+  .deal-wheel {
+    margin-top: 5%;
+    --size: clamp(400px, 60vmin, 400px);
+    font-size: calc(var(--size) / 21);
+    padding: 38px;
+  }
+  .btn-spin {
+    font-size: 16px;
+    padding: 5px;
+    width: 0150px;
+    height: 45px;
+    margin-top: 12px;
+  }
+  .prize {
+    padding: 0px 50px 0px 0px;
+    width: 45%;
+    height: 45%;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+}
+
+@media (min-width:992px) and (max-width:1200px) {
+    body {
+    background-size: 200%;
+  }
+}
+
+@media (min-width:1200px) and (max-width:1400px) {
+  body {
+  background-size: cover;
+}
 }

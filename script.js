@@ -1,10 +1,10 @@
-const prizes = [
+const prizes = [//МАССИВ С ПРИЗАМИ
   {
-    text: "500 ZWM",
+    text: "500 ZWM",//ПОЛЕ ДЛЯ ВЫИГРЫША, МЕНЯТЬ ЕГО
     color: "hsl(200 92% 64%)",
   },
   {
-    text: "Spin Again",
+    text: "Spin Again",//ПЕРВЫЙ СПИН ПРИЛЕТАЕТ СЮДА
     color: "hsl(317 88% 70%)",
   },
   {
@@ -102,6 +102,21 @@ const runTickerAnimation = () => {
 const selectPrize = () => {
   const selected = Math.floor(rotation / prizeSlice) % prizes.length;
   prizeNodes[selected].classList.add(selectedClass);
+
+  if (spinCount === 2) {//МОДАЛЬНОЕ ОКНО ПОСЛЕ ВЫИГРЫША,ТУТ МЕНЯТЬ ТЕКСТ
+    Swal.fire({
+      title: 'You won!',
+      text: 'Congratulations! You WON 500 ZWM',
+      icon: 'success',
+      confirmButtonText: 'Collect',
+      allowEscapeKey: false,//ПРОПИСАНО, ЧТО ПРИ НАЖАТИИ ESC, ОКНО НЕ ЗАКРОЕТСЯ
+      allowOutsideClick: false//ТОЖЕ САМОЕ, НО НИЧЕГО НЕ ПРОИСХОДИТ ПРИ НАЖАТИИ ВНЕ ОКНА
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = '#'; //ЗАМЕНА ССЫЛКИ
+      }
+    });
+  }
 };
 
 trigger.addEventListener("click", () => {
@@ -112,7 +127,7 @@ trigger.addEventListener("click", () => {
   } else if (spinCount === 1) {
     rotation += 360 * 5 + (prizeSlice * 6) + prizeOffset + 5; // 500 ZWM
   } else {
-    rotation += 360 * 5 + Math.floor(Math.random() * 360); // Random for subsequent spins
+    rotation += 360 * 5 + Math.floor(Math.random() * 360);
   }
   spinCount++;
 
