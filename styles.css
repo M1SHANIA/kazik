@@ -31,20 +31,23 @@ h1 {
 
 p {
   width: 500px;
-  color: #dd0869;
+  color: #f3dc2a;
+  text-shadow: #dd0869 3px 3px 3px; 
   font-size: 24px;
   font-weight: 600; 
   padding: 10px;
-  background-color: #e2d995be;
+  background: linear-gradient(rgba(219, 101, 255, 0.7), rgba(239, 188, 255, 0.7));
+  background-size: 100%;
   border-radius: 30px;
-  border: #e0d477 2px solid;
+  border: rgba(226, 130, 255, 0.378) 2px solid;
   text-align: center;
   margin: 0;
 }
 
 /* общий блок для всех элементов */
 .deal-wheel {
-  background-color: #f5e143;
+  background-image: url("img/wheel-bg.png");
+  background-size: 100%;
   padding: 35px;
   /* задаём переменные блока */
   /* размеры колеса */
@@ -122,6 +125,7 @@ p {
   transform: rotate(var(--rotate));
   /* запрещаем пользователю выделять мышкой текст на секторах */
   user-select: none;
+  font-size: 20px;
   font-weight: 600;
   color: #dedede;
   text-shadow: #dd0868 1px 1px 1px; 
@@ -149,8 +153,8 @@ p {
 .btn-spin {
   font-weight: 600;
   color: #ffffff;
-  background: #dd0868;
-  border: #a80750 2px solid;
+  background: #fdb10e;
+  border: #ffda02 2px solid;
   width: 200px;
   /* берём размер шрифта такой же, как в колесе */
   font-size: inherit;
@@ -160,6 +164,27 @@ p {
   border-radius: 0.5rem;
   /* меняем внешний вид курсора над кнопкой на руку*/
   cursor: pointer;
+  transition: ease-in-out 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-spin::after {
+  content: '';
+  position: absolute;
+  top: -60%; /* Смещаем вверх для создания эффекта глянца */
+  left: -10%;
+  width: 120%; /* Ширина больше, чем у кнопки, для полного покрытия */
+  height: 90%; /* Высота больше, чтобы создать эффект глянца */
+  background: linear-gradient(rgba(255, 255, 255, 0.258), transparent); /* Градиент для эффекта глянца */
+  transform: rotate(180deg); /* Поворачиваем для диагонального эффекта */
+  border-radius: 100%; /* Скругляем углы */
+}
+
+.btn-spin:hover {
+  background: #ffda02;
+  color: #c97d02;
+  border: #ffb719 2px solid;
 }
 
 /* если кнопка нажата и неактивна */
